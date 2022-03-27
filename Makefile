@@ -12,6 +12,10 @@ VERSION ?= $(shell git describe --tags)
 build: ## todo
 	env $$(cat .env) go build ./...
 
+.PHONY: test
+test: ## Run test suite.
+	go test -count=1 ./...
+
 .PHONY: run
 run: ## todo
 	env $$(cat .env) go run ./cmd/whack run /Users/hawker/src/github.com/flyingdice/whack-tinygo-guest-sdk/build/examples/hello/hello.wasm
