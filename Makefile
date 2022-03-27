@@ -16,10 +16,6 @@ build: ## todo
 test: ## Run test suite.
 	go test -count=1 ./...
 
-.PHONY: run
-run: ## todo
-	env $$(cat .env) go run ./cmd/whack run /Users/hawker/src/github.com/flyingdice/whack-tinygo-guest-sdk/build/examples/hello/hello.wasm
-
 .phony: modules
 modules: ## Tidy up and vendor go modules.
 	@GOPRIVATE=$(GOPRIVATE) go mod tidy
