@@ -35,7 +35,7 @@ func (t Topic) MarshalJSON() (data []byte, err error) {
 }
 
 // UnmarshalBinary converts the binary form to a Topic instance.
-//s
+//
 // Interface: encoding.BinaryUnmarshaler
 func (t *Topic) UnmarshalBinary(data []byte) (err error) {
 	return t.UnmarshalBinaryReader(bytes.NewReader(data))
@@ -44,13 +44,13 @@ func (t *Topic) UnmarshalBinary(data []byte) (err error) {
 // UnmarshalJSON converts the JSON form to a Topic instance.
 //
 // Interface: json.Unmarshal
-func (t *Topic) UnmarshalJSON(data []byte) error {
+func (t *Topic) UnmarshalJSON(data []byte) (err error) {
 	var topic string
 	if err := json.Unmarshal(data, &topic); err != nil {
 		return err
 	}
-	*t = Topic(topic)
-	return nil
+	*t, err = NewTopic(topic)
+	return err
 }
 
 // MarshalBinaryWriter populates the io.Writer with Topic data
@@ -71,7 +71,7 @@ func (t Topic) MarshalBinaryWriter(w io.Writer) (err error) {
 
 // UnmarshalBinaryReader populates Topic from an io.Reader
 // returning the binary form.
-func (t *Topic) UnmarshalBinaryReader(r io.Reader) error {
+func (t *Topic) UnmarshalBinaryReader(r io.Reader) (err error) {
 	var length int32
 	if err := binary.Read(r, binary.LittleEndian, &length); err != nil {
 		return err
@@ -80,6 +80,6 @@ func (t *Topic) UnmarshalBinaryReader(r io.Reader) error {
 	if _, err := io.ReadFull(r, buf); err != nil {
 		return err
 	}
-	*t = Topic(buf)
-	return nil
+	*t, err = NewTopic(string(buf))
+	return err
 }

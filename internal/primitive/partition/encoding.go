@@ -34,7 +34,7 @@ func (p Partition) MarshalJSON() (data []byte, err error) {
 }
 
 // UnmarshalBinary converts the binary form to a Partition instance.
-//s
+//
 // Interface: encoding.BinaryUnmarshaler
 func (p *Partition) UnmarshalBinary(data []byte) (err error) {
 	return p.UnmarshalBinaryReader(bytes.NewReader(data))
@@ -43,13 +43,13 @@ func (p *Partition) UnmarshalBinary(data []byte) (err error) {
 // UnmarshalJSON converts the JSON form to a Partition instance.
 //
 // Interface: json.Unmarshal
-func (p *Partition) UnmarshalJSON(data []byte) error {
+func (p *Partition) UnmarshalJSON(data []byte) (err error) {
 	var partition int32
 	if err := json.Unmarshal(data, &partition); err != nil {
 		return err
 	}
-	*p = Partition(partition)
-	return nil
+	*p, err = NewPartition(partition)
+	return err
 }
 
 // MarshalBinaryWriter populates the io.Writer with Partition data
@@ -60,11 +60,11 @@ func (p Partition) MarshalBinaryWriter(w io.Writer) (err error) {
 
 // UnmarshalBinaryReader populates Partition from an io.Reader
 // returning the binary form.
-func (p *Partition) UnmarshalBinaryReader(r io.Reader) error {
+func (p *Partition) UnmarshalBinaryReader(r io.Reader) (err error) {
 	var partition int32
 	if err := binary.Read(r, binary.LittleEndian, &partition); err != nil {
 		return err
 	}
-	*p = Partition(partition)
-	return nil
+	*p, err = NewPartition(partition)
+	return err
 }

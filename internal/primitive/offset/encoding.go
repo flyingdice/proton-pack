@@ -34,7 +34,7 @@ func (o Offset) MarshalJSON() (data []byte, err error) {
 }
 
 // UnmarshalBinary converts the binary form to a Offset instance.
-//s
+//
 // Interface: encoding.BinaryUnmarshaler
 func (o *Offset) UnmarshalBinary(data []byte) (err error) {
 	return o.UnmarshalBinaryReader(bytes.NewReader(data))
@@ -43,13 +43,13 @@ func (o *Offset) UnmarshalBinary(data []byte) (err error) {
 // UnmarshalJSON converts the JSON form to a Offset instance.
 //
 // Interface: json.Unmarshal
-func (o *Offset) UnmarshalJSON(data []byte) error {
+func (o *Offset) UnmarshalJSON(data []byte) (err error) {
 	var offset int64
 	if err := json.Unmarshal(data, &offset); err != nil {
 		return err
 	}
-	*o = Offset(offset)
-	return nil
+	*o, err = NewOffset(offset)
+	return err
 }
 
 // MarshalBinaryWriter populates the io.Writer with Offset data
@@ -60,11 +60,11 @@ func (o Offset) MarshalBinaryWriter(w io.Writer) (err error) {
 
 // UnmarshalBinaryReader populates Offset from an io.Reader
 // returning the binary form.
-func (o *Offset) UnmarshalBinaryReader(r io.Reader) error {
+func (o *Offset) UnmarshalBinaryReader(r io.Reader) (err error) {
 	var offset int64
 	if err := binary.Read(r, binary.LittleEndian, &offset); err != nil {
 		return err
 	}
-	*o = Offset(offset)
-	return nil
+	*o, err = NewOffset(offset)
+	return err
 }

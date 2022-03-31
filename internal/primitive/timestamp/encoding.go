@@ -35,7 +35,7 @@ func (t Timestamp) MarshalJSON() (data []byte, err error) {
 }
 
 // UnmarshalBinary converts the binary form to a Timestamp instance.
-//s
+//
 // Interface: encoding.BinaryUnmarshaler
 func (t *Timestamp) UnmarshalBinary(data []byte) (err error) {
 	return t.UnmarshalBinaryReader(bytes.NewReader(data))
@@ -44,15 +44,13 @@ func (t *Timestamp) UnmarshalBinary(data []byte) (err error) {
 // UnmarshalJSON converts the JSON form to a Timestamp instance.
 //
 // Interface: json.Unmarshal
-func (t *Timestamp) UnmarshalJSON(data []byte) error {
+func (t *Timestamp) UnmarshalJSON(data []byte) (err error) {
 	var timestamp time.Time
 	if err := json.Unmarshal(data, &timestamp); err != nil {
 		return err
 	}
-	*t = Timestamp{
-		Time: timestamp,
-	}
-	return nil
+	*t, err = NewTimestamp(timestamp)
+	return err
 }
 
 // MarshalBinaryWriter populates the io.Writer with Timestamp data
@@ -63,13 +61,11 @@ func (t Timestamp) MarshalBinaryWriter(w io.Writer) (err error) {
 
 // UnmarshalBinaryReader populates Timestamp from an io.Reader
 // returning the binary form.
-func (t *Timestamp) UnmarshalBinaryReader(r io.Reader) error {
+func (t *Timestamp) UnmarshalBinaryReader(r io.Reader) (err error) {
 	var timestampMilli int64
 	if err := binary.Read(r, binary.LittleEndian, &timestampMilli); err != nil {
 		return err
 	}
-	*t = Timestamp{
-		Time: time.UnixMilli(timestampMilli),
-	}
-	return nil
+	*t, err = NewTimestamp(time.UnixMilli(timestampMilli))
+	return err
 }
