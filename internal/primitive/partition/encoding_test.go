@@ -6,7 +6,7 @@ import (
 )
 
 // TestPartition_BinaryEncoding checks Partition equality when encoding/decoding to/from binary form.
-func TestPartition_BsinaryEncoding(t *testing.T) {
+func TestPartition_BinaryEncoding(t *testing.T) {
 	checker := func(p1 Partition) bool {
 		buf, err := p1.MarshalBinary()
 		if err != nil {

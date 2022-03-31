@@ -7,7 +7,8 @@ import (
 	"time"
 )
 
-func TestValidation_NewOffset(t *testing.T) {
+// TestValidation_NewTimestamp checks that default validation checks are run.
+func TestValidation_NewTimestamp(t *testing.T) {
 	checker := func(raw int64) bool {
 		_, err := NewTimestamp(time.UnixMilli(raw))
 		if raw < 0 {

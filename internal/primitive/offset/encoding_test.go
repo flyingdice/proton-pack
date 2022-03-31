@@ -6,7 +6,7 @@ import (
 )
 
 // TestOffset_BinaryEncoding checks Offset equality when encoding/decoding to/from binary form.
-func TestOffset_BsinaryEncoding(t *testing.T) {
+func TestOffset_BinaryEncoding(t *testing.T) {
 	checker := func(o1 Offset) bool {
 		buf, err := o1.MarshalBinary()
 		if err != nil {

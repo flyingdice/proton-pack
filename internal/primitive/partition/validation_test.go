@@ -6,17 +6,18 @@ import (
 	"testing/quick"
 )
 
-func TestValidation_NewOffset(t *testing.T) {
+// TestValidation_NewPartition checks that default validation checks are run.
+func TestValidation_NewPartition(t *testing.T) {
 	checker := func(raw int32) bool {
 		_, err := NewPartition(raw)
 		if raw < 0 {
 			if !errors.Is(err, ErrMustBePositive) {
-				t.Errorf("expected %v when offset < 0, got %v", ErrMustBePositive, err)
+				t.Errorf("expected %v when partition < 0, got %v", ErrMustBePositive, err)
 				return false
 			}
 		} else {
 			if err != nil {
-				t.Errorf("expected no error when offset >= 0, got %v", err)
+				t.Errorf("expected no error when partition >= 0, got %v", err)
 				return false
 			}
 		}
