@@ -28,6 +28,8 @@ func (t Topic) Equals(v any) bool {
 	switch t2 := v.(type) {
 	case Topic:
 		return t == t2
+	case string:
+		return string(t) == t2
 	default:
 		return false
 	}
