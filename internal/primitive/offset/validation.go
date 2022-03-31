@@ -14,7 +14,7 @@ var defaultChecks = []validation.Check[Offset]{
 }
 
 func checkPositive() validation.Check[Offset] {
-	return func(o Offset) validation.CheckError {
+	return func(o Offset) *validation.CheckError {
 		if o < 0 {
 			return ErrMustBePositive
 		}

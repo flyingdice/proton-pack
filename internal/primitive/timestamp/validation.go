@@ -18,7 +18,7 @@ var ErrMustBeNewerThanUnixEpoch = validation.NewCheckError(
 )
 
 func checkNewerThanUnixEpoch() validation.Check[Timestamp] {
-	return func(ts Timestamp) validation.CheckError {
+	return func(ts Timestamp) *validation.CheckError {
 		if ts.Unix() < unixEpoch.Unix() {
 			return ErrMustBeNewerThanUnixEpoch
 		}

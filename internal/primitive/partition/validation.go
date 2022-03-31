@@ -14,7 +14,7 @@ var defaultChecks = []validation.Check[Partition]{
 }
 
 func checkPositive() validation.Check[Partition] {
-	return func(p Partition) validation.CheckError {
+	return func(p Partition) *validation.CheckError {
 		if p < 0 {
 			return ErrMustBePositive
 		}

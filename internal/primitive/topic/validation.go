@@ -18,7 +18,7 @@ var ErrMustMatchPattern = validation.NewCheckError(
 )
 
 func checkPattern(r *regexp.Regexp) validation.Check[Topic] {
-	return func(t Topic) validation.CheckError {
+	return func(t Topic) *validation.CheckError {
 		match := r.MatchString(string(t))
 		if !match {
 			return ErrMustMatchPattern
