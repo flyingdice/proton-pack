@@ -3,7 +3,6 @@ package record
 import (
 	"bytes"
 	"encoding"
-	"github.com/flyingdice/proton-pack/internal/serde/binary"
 	"github.com/pkg/errors"
 	"io"
 )
@@ -16,11 +15,9 @@ var _ encoding.BinaryUnmarshaler = (*Metadata)(nil)
 // Interface: encoding.BinaryMarshaler
 func (m Metadata) MarshalBinary() (data []byte, err error) {
 	var buf bytes.Buffer
-
 	if err = m.MarshalBinaryWriter(&buf); err != nil {
 		return
 	}
-
 	data = buf.Bytes()
 	return
 }
@@ -34,17 +31,17 @@ func (m *Metadata) UnmarshalBinary(data []byte) error {
 
 // MarshalBinaryWriter populates the io.Writer with Metadata fields
 // in its binary form.
-func (m Metadata) MarshalBinaryWriter(w io.Writer) error {
-	if err := binary.MarshalTimestamp(w, m.Timestamp); err != nil {
+func (m Metadata) MarshalBinaryWriter(w io.Writer) (err error) {
+	if err := m.Timestamp.MarshalBinaryWriter(w); err != nil {
 		return errors.Wrap(err, "failed to marshal metadata timestamp")
 	}
-	if err := binary.MarshalOffset(w, m.Offset); err != nil {
+	if err := m.Offset.MarshalBinaryWriter(w); err != nil {
 		return errors.Wrap(err, "failed to marshal metadata offset")
 	}
-	if err := binary.MarshalTopic(w, m.Topic); err != nil {
-		return errors.Wrapf(err, "failed to marshal metadata topic")
+	if err := m.Topic.MarshalBinaryWriter(w); err != nil {
+		return errors.Wrap(err, "failed to marshal metadata topic")
 	}
-	if err := binary.MarshalPartition(w, m.Partition); err != nil {
+	if err := m.Partition.MarshalBinaryWriter(w); err != nil {
 		return errors.Wrap(err, "failed to marshal metadata partition")
 	}
 	return nil
@@ -53,16 +50,16 @@ func (m Metadata) MarshalBinaryWriter(w io.Writer) error {
 // UnmarshalBinaryReader populates Metadata fields from an io.Reader
 // returning the binary form.
 func (m *Metadata) UnmarshalBinaryReader(r io.Reader) error {
-	if err := binary.UnmarshalTimestamp(r, &m.Timestamp); err != nil {
+	if err := (&m.Timestamp).UnmarshalBinaryReader(r); err != nil {
 		return errors.Wrap(err, "failed to unmarshal metadata timestamp")
 	}
-	if err := binary.UnmarshalOffset(r, &m.Offset); err != nil {
+	if err := (&m.Offset).UnmarshalBinaryReader(r); err != nil {
 		return errors.Wrap(err, "failed to unmarshal metadata offset")
 	}
-	if err := binary.UnmarshalTopic(r, &m.Topic); err != nil {
+	if err := (&m.Topic).UnmarshalBinaryReader(r); err != nil {
 		return errors.Wrap(err, "failed to unmarshal metadata topic")
 	}
-	if err := binary.UnmarshalPartition(r, &m.Partition); err != nil {
+	if err := (&m.Partition).UnmarshalBinaryReader(r); err != nil {
 		return errors.Wrap(err, "failed to unmarshal metadata partition")
 	}
 	return nil

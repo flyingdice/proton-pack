@@ -2,43 +2,51 @@ package record
 
 import (
 	"fmt"
-	"github.com/bxcodec/faker/v3"
+	"github.com/flyingdice/proton-pack/internal/comparison"
+	"github.com/flyingdice/proton-pack/internal/primitive/offset"
+	"github.com/flyingdice/proton-pack/internal/primitive/partition"
+	"github.com/flyingdice/proton-pack/internal/primitive/timestamp"
+	"github.com/flyingdice/proton-pack/internal/primitive/topic"
 	"math/rand"
 	"reflect"
 	"testing/quick"
-	"time"
 )
 
 var _ fmt.Stringer = (*Metadata)(nil)
 var _ quick.Generator = (*Metadata)(nil)
+var _ comparison.Equaler = (*Metadata)(nil)
 
 type Metadata struct {
-	Partition int32     `json:"partition"`
-	Offset    int64     `json:"offset"`
-	Timestamp time.Time `json:"timestamp"`
-	Topic     string    `json:"topic"`
+	Partition partition.Partition `json:"partition"`
+	Offset    offset.Offset       `json:"offset"`
+	Timestamp timestamp.Timestamp `json:"timestamp"`
+	Topic     topic.Topic         `json:"topic"`
 }
 
 // Equals compares two Metadata instances for equality.
 //
 // Interface: comparison.Equaler
-func (m Metadata) Equals(o Metadata) bool {
-	return m.Partition == o.Partition &&
-		m.Offset == o.Offset &&
-		m.Topic == o.Topic &&
-		m.Timestamp.UnixMilli() == m.Timestamp.UnixMilli()
+func (m Metadata) Equals(v any) bool {
+	switch m2 := v.(type) {
+	case Metadata:
+		return m.Partition.Equals(m2.Partition) &&
+			m.Offset.Equals(m2.Offset) &&
+			m.Topic.Equals(m2.Topic) &&
+			m.Timestamp.Equals(m.Timestamp)
+	default:
+		return false
+	}
 }
 
 // Generate random Metadata values.
 //
 // Interface: quick.Generator
 func (Metadata) Generate(rand *rand.Rand, size int) reflect.Value {
-	faker.SetRandomSource(rand)
 	m := Metadata{
-		Partition: rand.Int31(),
-		Offset:    rand.Int63(),
-		Timestamp: time.Unix(0, 0).Add(time.Duration(rand.Int63())),
-		Topic:     faker.Word(),
+		Partition: partition.Generate(rand),
+		Offset:    offset.Generate(rand),
+		Timestamp: timestamp.Generate(rand),
+		Topic:     topic.Generate(rand),
 	}
 	return reflect.ValueOf(m)
 }
