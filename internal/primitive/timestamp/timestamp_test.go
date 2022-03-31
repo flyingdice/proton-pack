@@ -18,7 +18,7 @@ func TestTimestamp_String(t *testing.T) {
 }
 
 // TestTimestamp_EqualsTrue checks equality between two Timestamp instances and their
-// int32 representations.
+// time.Time representations.
 func TestTimestamp_EqualsTrue(t *testing.T) {
 	checker := func(ts Timestamp) bool {
 		if !ts.Equals(ts) {
@@ -38,7 +38,7 @@ func TestTimestamp_EqualsTrue(t *testing.T) {
 }
 
 // TestTimestamp_EqualsFalse checks inequality between two in-equal Timestamp instances and their
-// int32 representations.
+// time.Time representations.
 func TestTimestamp_EqualsFalse(t *testing.T) {
 	checker := func(ts1 Timestamp) bool {
 		ts2 := Timestamp{

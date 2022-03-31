@@ -17,7 +17,7 @@ func TestTopic_String(t *testing.T) {
 }
 
 // TestTopic_EqualsTrue checks equality between two Topic instances and their
-// int32 representations.
+// string representations.
 func TestTopic_EqualsTrue(t *testing.T) {
 	checker := func(t1 Topic) bool {
 		if !t1.Equals(t1) {
@@ -34,7 +34,7 @@ func TestTopic_EqualsTrue(t *testing.T) {
 }
 
 // TestTopic_EqualsFalse checks inequality between two in-equal Topic instances and their
-// int32 representations.
+// string representations.
 func TestTopic_EqualsFalse(t *testing.T) {
 	checker := func(t1 Topic) bool {
 		t2 := t1 + "foo"
