@@ -10,11 +10,11 @@ import (
 
 // TestCheckError_Error checks Error() output is expected format.
 func Test_Validate(t *testing.T) {
-	var errTestIntPositive = NewCheckError("int_must_be_positive", "integer value must be positive")
+	var errTestIntPositive = NewError("int_must_be_positive", "integer value must be positive")
 
 	// Simple check function that tests integers are positive.
 	checkPositive := func() Check[int] {
-		return func(x int) *CheckError {
+		return func(x int) *Error {
 			if x%2 != 0 {
 				return errTestIntPositive
 			}
@@ -46,9 +46,9 @@ func Test_Validate(t *testing.T) {
 func TestCheckError_Error(t *testing.T) {
 	checker := func() bool {
 		slug, desc := faker.Word(), faker.Sentence()
-		ce := NewCheckError(slug, desc)
+		ce := NewError(slug, desc)
 		return ce.Error() == fmt.Sprintf(
-			"CheckError(code=%d slug=%s desc=%s)",
+			"Error(code=%d slug=%s desc=%s)",
 			ce.Code,
 			ce.Slug,
 			ce.Desc,
@@ -63,7 +63,7 @@ func TestCheckError_Error(t *testing.T) {
 func TestCheckError_Code(t *testing.T) {
 	checker := func() bool {
 		slug, desc := faker.Word(), faker.Sentence()
-		ce := NewCheckError(slug, desc)
+		ce := NewError(slug, desc)
 		return ce.Code == errCode(slug)
 	}
 	if err := quick.Check(checker, nil); err != nil {
