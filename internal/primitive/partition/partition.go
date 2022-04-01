@@ -7,9 +7,11 @@ import (
 	"math"
 	"math/rand"
 	"reflect"
+	"testing/quick"
 )
 
 var _ fmt.Stringer = (*Partition)(nil)
+var _ quick.Generator = (*Partition)(nil)
 var _ comparison.Equaler = (*Partition)(nil)
 var _ validation.Checker = (*Partition)(nil)
 
@@ -24,7 +26,7 @@ func NewPartition(v int32) (Partition, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Partition.
 func (p Partition) Check() validation.ErrorGroup {
-	return validation.Validate[Partition](p, defaultChecks...)
+	return validation.RunChecks[Partition](p, defaultChecks...)
 }
 
 // Equals compares two Partition instances for equality.

@@ -7,9 +7,11 @@ import (
 	"math"
 	"math/rand"
 	"reflect"
+	"testing/quick"
 )
 
 var _ fmt.Stringer = (*Offset)(nil)
+var _ quick.Generator = (*Offset)(nil)
 var _ comparison.Equaler = (*Offset)(nil)
 var _ validation.Checker = (*Offset)(nil)
 
@@ -24,7 +26,7 @@ func NewOffset(v int64) (Offset, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Offset.
 func (o Offset) Check() validation.ErrorGroup {
-	return validation.Validate[Offset](o, defaultChecks...)
+	return validation.RunChecks[Offset](o, defaultChecks...)
 }
 
 // Equals compares two Offset instances for equality.

@@ -8,9 +8,11 @@ import (
 	"github.com/flyingdice/proton-pack/internal/validation"
 	"math/rand"
 	"reflect"
+	"testing/quick"
 )
 
 var _ fmt.Stringer = (*Header)(nil)
+var _ quick.Generator = (*Header)(nil)
 var _ comparison.Equaler = (*Header)(nil)
 var _ validation.Checker = (*Header)(nil)
 
@@ -28,7 +30,7 @@ func NewHeader(key string, val []byte) (Header, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Header.
 func (h Header) Check() validation.ErrorGroup {
-	return validation.Validate[Header](h, defaultChecks...)
+	return validation.RunChecks[Header](h, defaultChecks...)
 }
 
 // Equals compares two Header instances for equality.

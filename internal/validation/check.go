@@ -8,10 +8,10 @@ type Checker interface {
 // Check is a function that performs a validation check of a value of type T.
 type Check[T any] func(val T) *Error
 
-// Validate runs checks for the given value.
+// RunChecks runs checks for the given value.
 //
 // If the value is invalid, one or more Errors will be returned.
-func Validate[T any](val T, checks ...Check[T]) ErrorGroup {
+func RunChecks[T any](val T, checks ...Check[T]) ErrorGroup {
 	errs := &Errors{}
 
 	for _, check := range checks {
@@ -20,5 +20,16 @@ func Validate[T any](val T, checks ...Check[T]) ErrorGroup {
 		}
 	}
 
+	return errs.NilWhenEmpty()
+}
+
+// RunCheckers runs checkers and bundles all errors into a group.
+func RunCheckers(checkers ...Checker) ErrorGroup {
+	errs := &Errors{}
+	for _, checker := range checkers {
+		if err := checker.Check(); err != nil {
+			errs.Append(err.Errors()...)
+		}
+	}
 	return errs.NilWhenEmpty()
 }

@@ -23,7 +23,7 @@ func Test_Validate(t *testing.T) {
 	}
 
 	checker := func(v int) bool {
-		err := Validate(v, checkPositive())
+		err := RunChecks(v, checkPositive())
 		if v%2 == 0 {
 			if err != nil {
 				t.Errorf("got err %s; expected none", err)
