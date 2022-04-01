@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/flyingdice/proton-pack/internal/comparison"
 	"github.com/flyingdice/proton-pack/internal/validation"
+	"math"
 	"math/rand"
 	"reflect"
 	"time"
@@ -11,6 +12,7 @@ import (
 
 var _ fmt.Stringer = (*Timestamp)(nil)
 var _ comparison.Equaler = (*Timestamp)(nil)
+var _ validation.Checker = (*Timestamp)(nil)
 
 // Timestamp represents a kafka message timestamp.
 type Timestamp struct {
@@ -18,9 +20,14 @@ type Timestamp struct {
 }
 
 // NewTimestamp creates and validates a new Timestamp from the given time.Time.
-func NewTimestamp(t time.Time) (Timestamp, error) {
+func NewTimestamp(t time.Time) (Timestamp, validation.ErrorGroup) {
 	ts := Timestamp{t}
-	return ts, validation.Validate[Timestamp](ts, defaultChecks...)
+	return ts, ts.Check()
+}
+
+// Check runs default validation checks for the Timestamp.
+func (t Timestamp) Check() validation.ErrorGroup {
+	return validation.Validate[Timestamp](t, defaultChecks...)
 }
 
 // Equals compares two Timestamp instances for equality.
@@ -55,6 +62,6 @@ func (t Timestamp) String() string {
 
 // Generate a random Timestamp value.
 func Generate(rand *rand.Rand) Timestamp {
-	t := time.Unix(0, 0).Add(time.Duration(rand.Int63()))
+	t := time.Unix(0, 0).Add(time.Duration(rand.Int63n(math.MaxInt64)))
 	return Timestamp{Time: t}
 }

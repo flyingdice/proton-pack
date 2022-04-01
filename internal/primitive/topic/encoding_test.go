@@ -11,10 +11,12 @@ func TestTopic_BinaryEncoding(t *testing.T) {
 		buf, err := t1.MarshalBinary()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var t2 Topic
 		if err := t2.UnmarshalBinary(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 		return t1.Equals(t2)
 	}
@@ -29,10 +31,12 @@ func TestTopic_JSONEncoding(t *testing.T) {
 		buf, err := t1.MarshalJSON()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var t2 Topic
 		if err := t2.UnmarshalJSON(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 		return t1.Equals(t2)
 	}

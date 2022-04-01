@@ -11,10 +11,12 @@ func TestPartition_BinaryEncoding(t *testing.T) {
 		buf, err := p1.MarshalBinary()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var p2 Partition
 		if err := p2.UnmarshalBinary(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 		return p1.Equals(p2)
 	}
@@ -29,10 +31,12 @@ func TestPartition_JSONEncoding(t *testing.T) {
 		buf, err := p1.MarshalJSON()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var p2 Partition
 		if err := p2.UnmarshalJSON(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 		return p1.Equals(p2)
 	}

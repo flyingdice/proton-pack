@@ -12,6 +12,7 @@ import (
 
 var _ fmt.Stringer = (*Header)(nil)
 var _ comparison.Equaler = (*Header)(nil)
+var _ validation.Checker = (*Header)(nil)
 
 // Header represents the key/value pair for a Kafka message.
 type Header struct {
@@ -20,9 +21,14 @@ type Header struct {
 }
 
 // NewHeader creates and validates a new Header from the given key/val.
-func NewHeader(key string, val []byte) (Header, error) {
+func NewHeader(key string, val []byte) (Header, validation.ErrorGroup) {
 	h := Header{key, val}
-	return h, validation.Validate[Header](h, defaultChecks...)
+	return h, h.Check()
+}
+
+// Check runs default validation checks for the Header.
+func (h Header) Check() validation.ErrorGroup {
+	return validation.Validate[Header](h, defaultChecks...)
 }
 
 // Equals compares two Header instances for equality.

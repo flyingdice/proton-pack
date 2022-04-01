@@ -2,7 +2,6 @@ package header
 
 import (
 	"encoding/json"
-	"log"
 	"testing"
 	"testing/quick"
 )
@@ -13,14 +12,14 @@ func TestHeader_BinaryEncoding(t *testing.T) {
 		buf, err := h1.MarshalBinary()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var h2 Header
 		if err := h2.UnmarshalBinary(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 
-		log.Print("h1 ", h1)
-		log.Print("h2 ", h2)
 		return h1.Equals(h2)
 	}
 	if err := quick.Check(checker, nil); err != nil {
@@ -34,10 +33,12 @@ func TestHeader_JSONEncoding(t *testing.T) {
 		buf, err := json.Marshal(h1)
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var h2 Header
 		if err := json.Unmarshal(buf, &h2); err != nil {
 			t.Error(err)
+			return false
 		}
 		return h1.Equals(h2)
 	}

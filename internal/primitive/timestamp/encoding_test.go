@@ -11,10 +11,12 @@ func TestTimestamp_BinaryEncoding(t *testing.T) {
 		buf, err := ts1.MarshalBinary()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var ts2 Timestamp
 		if err := ts2.UnmarshalBinary(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 		return ts2.Equals(ts2)
 	}
@@ -29,10 +31,12 @@ func TestTimestamp_JSONEncoding(t *testing.T) {
 		buf, err := ts1.MarshalJSON()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var ts2 Timestamp
 		if err := ts2.UnmarshalJSON(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 		return ts1.Equals(ts2)
 	}

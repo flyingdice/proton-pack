@@ -50,16 +50,25 @@ func (h Header) MarshalBinaryWriter(w io.Writer) (err error) {
 	}
 
 	// Val.
-	if err := binary.Write(w, binary.LittleEndian, int32(valLength)); err != nil {
-		return errors.Wrap(err, "failed to marshal header val length")
+	// If empty/nil/undefined, store -1 for the value (without a length)
+	// as the sentinel value.
+	if h.Val == nil || len(h.Val) == 0 {
+		if err := binary.Write(w, binary.LittleEndian, int32(-1)); err != nil {
+			return errors.Wrap(err, "failed to marshal header val sentinel")
+		}
+	} else {
+		if err := binary.Write(w, binary.LittleEndian, int32(valLength)); err != nil {
+			return errors.Wrap(err, "failed to marshal header val length")
+		}
+		wrote, err = w.Write(h.Val)
+		if err != nil {
+			return errors.Wrap(err, "failed to marshal header val")
+		}
+		if wrote != valLength {
+			return errors.Errorf("failed to marshal header val. expected %d; wrote %d", valLength, wrote)
+		}
 	}
-	wrote, err = w.Write(h.Val)
-	if err != nil {
-		return errors.Wrap(err, "failed to marshal header val")
-	}
-	if wrote != valLength {
-		return errors.Errorf("failed to marshal header val. expected %d; wrote %d", valLength, wrote)
-	}
+
 	return nil
 }
 

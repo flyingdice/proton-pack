@@ -11,10 +11,12 @@ func TestOffset_BinaryEncoding(t *testing.T) {
 		buf, err := o1.MarshalBinary()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var o2 Offset
 		if err := o2.UnmarshalBinary(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 		return o1.Equals(o2)
 	}
@@ -29,10 +31,12 @@ func TestOffset_JSONEncoding(t *testing.T) {
 		buf, err := o1.MarshalJSON()
 		if err != nil {
 			t.Error(err)
+			return false
 		}
 		var o2 Offset
 		if err := o2.UnmarshalJSON(buf); err != nil {
 			t.Error(err)
+			return false
 		}
 		return o1.Equals(o2)
 	}

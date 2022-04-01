@@ -4,20 +4,27 @@ import (
 	"fmt"
 	"github.com/flyingdice/proton-pack/internal/comparison"
 	"github.com/flyingdice/proton-pack/internal/validation"
+	"math"
 	"math/rand"
 	"reflect"
 )
 
 var _ fmt.Stringer = (*Partition)(nil)
 var _ comparison.Equaler = (*Partition)(nil)
+var _ validation.Checker = (*Partition)(nil)
 
 // Partition represents the partition of a topic.
 type Partition int32
 
 // NewPartition creates and validates a new Partition from the given int32.
-func NewPartition(v int32) (Partition, error) {
+func NewPartition(v int32) (Partition, validation.ErrorGroup) {
 	p := Partition(v)
-	return p, validation.Validate[Partition](p, defaultChecks...)
+	return p, p.Check()
+}
+
+// Check runs default validation checks for the Partition.
+func (p Partition) Check() validation.ErrorGroup {
+	return validation.Validate[Partition](p, defaultChecks...)
 }
 
 // Equals compares two Partition instances for equality.
@@ -50,5 +57,5 @@ func (p Partition) String() string {
 
 // Generate a random Partition value.
 func Generate(rand *rand.Rand) Partition {
-	return Partition(rand.Int31())
+	return Partition(rand.Int31n(math.MaxInt32))
 }

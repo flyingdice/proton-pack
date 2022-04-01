@@ -11,14 +11,20 @@ import (
 
 var _ fmt.Stringer = (*Topic)(nil)
 var _ comparison.Equaler = (*Topic)(nil)
+var _ validation.Checker = (*Topic)(nil)
 
 // Topic represents a kafka topic.
 type Topic string
 
 // NewTopic creates and validates a new Topic from the given string.
-func NewTopic(s string) (Topic, error) {
+func NewTopic(s string) (Topic, validation.ErrorGroup) {
 	t := Topic(s)
-	return t, validation.Validate[Topic](t, defaultChecks...)
+	return t, t.Check()
+}
+
+// Check runs default validation checks for the Topic.
+func (t Topic) Check() validation.ErrorGroup {
+	return validation.Validate[Topic](t, defaultChecks...)
 }
 
 // Equals compares two Topic instances for equality.
@@ -52,5 +58,5 @@ func (t Topic) String() string {
 // Generate a random Topic value.
 func Generate(rand *rand.Rand) Topic {
 	faker.SetRandomSource(rand)
-	return Topic(faker.Word())
+	return Topic(faker.Word() + "-" + faker.Word())
 }
