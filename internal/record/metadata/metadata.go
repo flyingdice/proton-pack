@@ -42,13 +42,7 @@ func (m Metadata) Equals(v any) bool {
 //
 // Interface: quick.Generator
 func (Metadata) Generate(rand *rand.Rand, size int) reflect.Value {
-	m := Metadata{
-		Partition: partition.Generate(rand),
-		Offset:    offset.Generate(rand),
-		Timestamp: timestamp.Generate(rand),
-		Topic:     topic.Generate(rand),
-	}
-	return reflect.ValueOf(m)
+	return reflect.ValueOf(Generate(rand))
 }
 
 // String value of the Metadata.
@@ -62,4 +56,14 @@ func (m Metadata) String() string {
 		m.Offset,
 		m.Timestamp,
 	)
+}
+
+// Generate a random Metadata value.
+func Generate(rand *rand.Rand) Metadata {
+	return Metadata{
+		Partition: partition.Generate(rand),
+		Offset:    offset.Generate(rand),
+		Timestamp: timestamp.Generate(rand),
+		Topic:     topic.Generate(rand),
+	}
 }
