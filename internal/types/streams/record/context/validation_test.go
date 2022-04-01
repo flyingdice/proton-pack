@@ -1,8 +1,8 @@
 package context
 
 import (
-	"github.com/flyingdice/proton-pack/internal/primitive/headers"
-	"github.com/flyingdice/proton-pack/internal/record/metadata"
+	"github.com/flyingdice/proton-pack/internal/types/kafka/headers"
+	"github.com/flyingdice/proton-pack/internal/types/streams/record/metadata"
 	"testing"
 	"testing/quick"
 )
