@@ -6,8 +6,6 @@ import (
 	"testing/quick"
 )
 
-var _ quick.Generator = (*Context)(nil)
-
 func TestContext_String(t *testing.T) {
 	checker := func(c Context) bool {
 		return c.String() == fmt.Sprintf(
