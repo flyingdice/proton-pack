@@ -7,6 +7,7 @@ import (
 	"github.com/flyingdice/proton-pack/internal/primitive/partition"
 	"github.com/flyingdice/proton-pack/internal/primitive/timestamp"
 	"github.com/flyingdice/proton-pack/internal/primitive/topic"
+	"github.com/flyingdice/proton-pack/internal/validation"
 	"math/rand"
 	"reflect"
 	"testing/quick"
@@ -15,12 +16,29 @@ import (
 var _ fmt.Stringer = (*Metadata)(nil)
 var _ quick.Generator = (*Metadata)(nil)
 var _ comparison.Equaler = (*Metadata)(nil)
+var _ validation.Checker = (*Metadata)(nil)
 
 type Metadata struct {
 	Partition partition.Partition `json:"partition"`
 	Offset    offset.Offset       `json:"offset"`
 	Timestamp timestamp.Timestamp `json:"timestamp"`
 	Topic     topic.Topic         `json:"topic"`
+}
+
+// NewMetadata creates and validates a new Metadata from the given fields.
+func NewMetadata(
+	p partition.Partition,
+	o offset.Offset,
+	ts timestamp.Timestamp,
+	t topic.Topic,
+) (Metadata, validation.ErrorGroup) {
+	m := Metadata{p, o, ts, t}
+	return m, m.Check()
+}
+
+// Check runs default validation checks for the Metadata.
+func (m Metadata) Check() validation.ErrorGroup {
+	return validation.RunChecks[Metadata](m, defaultChecks...)
 }
 
 // Equals compares two Metadata instances for equality.
@@ -50,7 +68,7 @@ func (Metadata) Generate(rand *rand.Rand, size int) reflect.Value {
 // Interface: fmt.Stringer.
 func (m Metadata) String() string {
 	return fmt.Sprintf(
-		"Metadata(topic=%s, partition=%d, offset=%d, timestamp=%v)",
+		"Metadata(topic=%s partition=%s offset=%s timestamp=%s)",
 		m.Topic,
 		m.Partition,
 		m.Offset,
