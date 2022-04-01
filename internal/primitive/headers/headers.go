@@ -28,7 +28,7 @@ func NewHeaders(headers []header.Header) (Headers, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Header.
 func (h Headers) Check() validation.ErrorGroup {
-	return validation.Validate[Headers](h, defaultChecks...)
+	return validation.RunChecks[Headers](h, defaultChecks...)
 }
 
 // Equals compares two Headers instances for equality.

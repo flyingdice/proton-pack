@@ -26,7 +26,7 @@ func NewPartition(v int32) (Partition, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Partition.
 func (p Partition) Check() validation.ErrorGroup {
-	return validation.Validate[Partition](p, defaultChecks...)
+	return validation.RunChecks[Partition](p, defaultChecks...)
 }
 
 // Equals compares two Partition instances for equality.

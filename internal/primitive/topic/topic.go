@@ -26,7 +26,7 @@ func NewTopic(s string) (Topic, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Topic.
 func (t Topic) Check() validation.ErrorGroup {
-	return validation.Validate[Topic](t, defaultChecks...)
+	return validation.RunChecks[Topic](t, defaultChecks...)
 }
 
 // Equals compares two Topic instances for equality.

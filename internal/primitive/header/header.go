@@ -30,7 +30,7 @@ func NewHeader(key string, val []byte) (Header, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Header.
 func (h Header) Check() validation.ErrorGroup {
-	return validation.Validate[Header](h, defaultChecks...)
+	return validation.RunChecks[Header](h, defaultChecks...)
 }
 
 // Equals compares two Header instances for equality.

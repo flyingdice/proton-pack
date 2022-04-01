@@ -26,7 +26,7 @@ func NewOffset(v int64) (Offset, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Offset.
 func (o Offset) Check() validation.ErrorGroup {
-	return validation.Validate[Offset](o, defaultChecks...)
+	return validation.RunChecks[Offset](o, defaultChecks...)
 }
 
 // Equals compares two Offset instances for equality.

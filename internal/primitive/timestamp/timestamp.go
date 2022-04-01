@@ -29,7 +29,7 @@ func NewTimestamp(t time.Time) (Timestamp, validation.ErrorGroup) {
 
 // Check runs default validation checks for the Timestamp.
 func (t Timestamp) Check() validation.ErrorGroup {
-	return validation.Validate[Timestamp](t, defaultChecks...)
+	return validation.RunChecks[Timestamp](t, defaultChecks...)
 }
 
 // Equals compares two Timestamp instances for equality.
