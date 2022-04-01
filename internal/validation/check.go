@@ -10,9 +10,9 @@ type Check[T any] func(val T) *Error
 
 // Validate runs checks for the given value.
 //
-// If the value is invalid, one or more errorGroup will be returned.
+// If the value is invalid, one or more Errors will be returned.
 func Validate[T any](val T, checks ...Check[T]) ErrorGroup {
-	errs := &errorGroup{}
+	errs := &Errors{}
 
 	for _, check := range checks {
 		if e := check(val); e != nil {

@@ -5,74 +5,84 @@ import (
 	"strings"
 )
 
-var _ error = (*errorGroup)(nil)
+var _ error = (*Errors)(nil)
+var _ ErrorGroup = (*Errors)(nil)
 
 // ErrorGroup represents a grouping of validation errors.
 type ErrorGroup interface {
 	error
 
-	Append(err *Error)
-	Unwrap() error
+	Append(err ...*Error)
+	Errors() []*Error
 	NilWhenEmpty() ErrorGroup
+	Unwrap() error
 }
 
-// errorGroup represents a slice of Error.
-type errorGroup struct {
-	Errors []*Error
+// Errors represents a slice of Error that implements the ErrorGroup interface.
+type Errors struct {
+	errs []*Error
+}
+
+// Append adds a new Error to the group.
+//
+// Interface: ErrorGroup
+func (e *Errors) Append(err ...*Error) {
+	e.errs = append(e.errs, err...)
+}
+
+// Errors returns a slice of errors in the group.
+//
+// Interface: ErrorGroup
+func (e *Errors) Errors() []*Error {
+	return e.errs
 }
 
 // NilWhenEmpty will return nil if the instance is nil or doesn't contain
 // any errors. This is helpful for callers to return the result of this function
 // after accumulating errors in a loop.
-func (e *errorGroup) NilWhenEmpty() ErrorGroup {
+//
+// Interface: ErrorGroup
+func (e *Errors) NilWhenEmpty() ErrorGroup {
 	if e == nil {
 		return nil
 	}
-	if len(e.Errors) == 0 {
+	if len(e.errs) == 0 {
 		return nil
 	}
 	return e
 }
 
-// Append adds a new Error to the group.
-func (e *errorGroup) Append(err *Error) {
-	e.Errors = append(e.Errors, err)
-}
-
 // Unwrap returns the next error in the slice or nil if there are no more errors.
 //
-// Interface: errors.Unwrap
-func (e *errorGroup) Unwrap() error {
+// Interface: errors.Unwrap, ErrorGroup
+func (e *Errors) Unwrap() error {
 	// If we have no errors then we do nothing
-	if e == nil || len(e.Errors) == 0 {
+	if e == nil || len(e.errs) == 0 {
 		return nil
 	}
 
 	// If we have exactly one error, we can just return that directly.
-	if len(e.Errors) == 1 {
-		return e.Errors[0]
+	if len(e.errs) == 1 {
+		return e.errs[0]
 	}
 
 	// Shallow copy the slice
-	errs := make([]*Error, len(e.Errors))
-	copy(errs, e.Errors)
+	errs := make([]*Error, len(e.errs))
+	copy(errs, e.errs)
 	return chain(errs)
 }
 
-// Error string value of the errorGroup struct.
+// Error string value of the Errors struct.
 //
 // Interface: error
-func (e *errorGroup) Error() string {
-	if len(e.Errors) == 0 {
+func (e *Errors) Error() string {
+	if len(e.errs) == 0 {
 		return ""
 	}
 
 	var sb strings.Builder
-	for _, e := range e.Errors {
-		_, err := sb.WriteString(fmt.Sprintf("%v\n", e))
-		if err != nil {
-			panic(err)
-		}
+	for _, e := range e.errs {
+		_, _ = sb.WriteString(fmt.Sprintf("%v\n", e))
 	}
 
 	return sb.String()
