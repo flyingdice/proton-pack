@@ -10,11 +10,15 @@ VERSION ?= $(shell git describe --tags)
 
 .PHONY: build
 build: ## todo
-	env $$(cat .env) go build ./...
+	@env $$(cat .env) go build ./...
+
+.PHONY: lint
+lint: ## Run go linters.
+	@golangci-lint run
 
 .PHONY: test
 test: ## Run test suite.
-	go test -count=1 ./...
+	@go test -count=1 ./...
 
 .phony: modules
 modules: ## Tidy up and vendor go modules.

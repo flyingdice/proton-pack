@@ -2,6 +2,12 @@
 ## explicit; go 1.12
 github.com/bxcodec/faker/v3
 github.com/bxcodec/faker/v3/support/slice
+# github.com/hashicorp/errwrap v1.0.0
+## explicit
+github.com/hashicorp/errwrap
+# github.com/hashicorp/go-multierror v1.1.1
+## explicit; go 1.13
+github.com/hashicorp/go-multierror
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
