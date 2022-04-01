@@ -7,10 +7,12 @@ import (
 	"math"
 	"math/rand"
 	"reflect"
+	"testing/quick"
 	"time"
 )
 
 var _ fmt.Stringer = (*Timestamp)(nil)
+var _ quick.Generator = (*Timestamp)(nil)
 var _ comparison.Equaler = (*Timestamp)(nil)
 var _ validation.Checker = (*Timestamp)(nil)
 

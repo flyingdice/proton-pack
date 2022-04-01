@@ -7,9 +7,11 @@ import (
 	"github.com/flyingdice/proton-pack/internal/validation"
 	"math/rand"
 	"reflect"
+	"testing/quick"
 )
 
 var _ fmt.Stringer = (*Topic)(nil)
+var _ quick.Generator = (*Topic)(nil)
 var _ comparison.Equaler = (*Topic)(nil)
 var _ validation.Checker = (*Topic)(nil)
 

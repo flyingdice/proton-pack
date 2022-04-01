@@ -7,9 +7,11 @@ import (
 	"math"
 	"math/rand"
 	"reflect"
+	"testing/quick"
 )
 
 var _ fmt.Stringer = (*Partition)(nil)
+var _ quick.Generator = (*Partition)(nil)
 var _ comparison.Equaler = (*Partition)(nil)
 var _ validation.Checker = (*Partition)(nil)
 

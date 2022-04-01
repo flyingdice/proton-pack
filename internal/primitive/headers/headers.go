@@ -9,9 +9,11 @@ import (
 	"math/rand"
 	"reflect"
 	"strings"
+	"testing/quick"
 )
 
 var _ fmt.Stringer = (*Headers)(nil)
+var _ quick.Generator = (*Headers)(nil)
 var _ comparison.Equaler = (*Headers)(nil)
 var _ validation.Checker = (*Headers)(nil)
 

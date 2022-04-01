@@ -7,9 +7,11 @@ import (
 	"math"
 	"math/rand"
 	"reflect"
+	"testing/quick"
 )
 
 var _ fmt.Stringer = (*Offset)(nil)
+var _ quick.Generator = (*Offset)(nil)
 var _ comparison.Equaler = (*Offset)(nil)
 var _ validation.Checker = (*Offset)(nil)
 
