@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/bxcodec/faker/v3"
 	"github.com/flyingdice/proton-pack/internal/comparison"
-	"github.com/flyingdice/proton-pack/internal/primitive/header"
+	"github.com/flyingdice/proton-pack/internal/types/kafka/header"
 	"github.com/flyingdice/proton-pack/internal/validation"
 	"math/rand"
 	"reflect"
@@ -26,7 +26,7 @@ func NewHeaders(headers []header.Header) (Headers, validation.ErrorGroup) {
 	return h, h.Check()
 }
 
-// Check runs default validation checks for the Header.
+// Check runs default validation checks for the Headers.
 func (h Headers) Check() validation.ErrorGroup {
 	return validation.RunChecks[Headers](h, defaultChecks...)
 }

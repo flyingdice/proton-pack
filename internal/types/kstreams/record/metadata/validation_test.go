@@ -1,10 +1,10 @@
 package metadata
 
 import (
-	"github.com/flyingdice/proton-pack/internal/primitive/offset"
-	"github.com/flyingdice/proton-pack/internal/primitive/partition"
-	"github.com/flyingdice/proton-pack/internal/primitive/timestamp"
-	"github.com/flyingdice/proton-pack/internal/primitive/topic"
+	"github.com/flyingdice/proton-pack/internal/types/kafka/offset"
+	"github.com/flyingdice/proton-pack/internal/types/kafka/partition"
+	"github.com/flyingdice/proton-pack/internal/types/kafka/timestamp"
+	"github.com/flyingdice/proton-pack/internal/types/kafka/topic"
 	"testing"
 	"testing/quick"
 )

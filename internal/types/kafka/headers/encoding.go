@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding"
 	"encoding/binary"
-	"github.com/flyingdice/proton-pack/internal/primitive/header"
+	"github.com/flyingdice/proton-pack/internal/types/kafka/header"
 	"github.com/pkg/errors"
 	"io"
 )

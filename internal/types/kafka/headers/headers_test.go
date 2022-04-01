@@ -2,7 +2,7 @@ package headers
 
 import (
 	"fmt"
-	"github.com/flyingdice/proton-pack/internal/primitive/header"
+	"github.com/flyingdice/proton-pack/internal/types/kafka/header"
 	"strings"
 	"testing"
 	"testing/quick"
