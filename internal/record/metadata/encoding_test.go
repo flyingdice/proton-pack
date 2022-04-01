@@ -1,4 +1,4 @@
-package record
+package metadata
 
 import (
 	"encoding/json"
