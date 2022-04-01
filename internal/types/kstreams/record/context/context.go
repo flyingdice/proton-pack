@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/flyingdice/proton-pack/internal/comparison"
 	"github.com/flyingdice/proton-pack/internal/types/kafka/headers"
-	"github.com/flyingdice/proton-pack/internal/types/streams/record/metadata"
+	"github.com/flyingdice/proton-pack/internal/types/kstreams/record/metadata"
 	"github.com/flyingdice/proton-pack/internal/validation"
 	"math/rand"
 	"reflect"
