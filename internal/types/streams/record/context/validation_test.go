@@ -1,17 +1,16 @@
-package record
+package context
 
 import (
-	"github.com/bxcodec/faker/v3"
 	"github.com/flyingdice/proton-pack/internal/types/kafka/headers"
-	"github.com/flyingdice/proton-pack/internal/types/kstreams/record/metadata"
+	"github.com/flyingdice/proton-pack/internal/types/streams/record/metadata"
 	"testing"
 	"testing/quick"
 )
 
-// TestValidation_NewRecord checks that default validation checks are run.
-func TestValidation_NewRecord(t *testing.T) {
+// TestValidation_NewContext checks that default validation checks are run.
+func TestValidation_NewContext(t *testing.T) {
 	checker := func(m metadata.Metadata, h headers.Headers) bool {
-		_, err := NewRecord(faker.Word(), faker.Sentence(), m, h)
+		_, err := NewContext(m, h)
 		if err != nil {
 			t.Error(err)
 			return false
