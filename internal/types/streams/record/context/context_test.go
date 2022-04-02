@@ -6,6 +6,7 @@ import (
 	"testing/quick"
 )
 
+// TestContext_String checks String() output is expected format.
 func TestContext_String(t *testing.T) {
 	checker := func(c Context) bool {
 		return c.String() == fmt.Sprintf(
