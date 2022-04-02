@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"github.com/flyingdice/proton-pack/internal/comparison"
 	"github.com/flyingdice/proton-pack/internal/types/kafka/headers"
+	"github.com/flyingdice/proton-pack/internal/types/streams/clock"
+	"github.com/flyingdice/proton-pack/internal/types/streams/clock/frozen"
+	"github.com/flyingdice/proton-pack/internal/types/streams/clock/standard"
 	"github.com/flyingdice/proton-pack/internal/types/streams/record/metadata"
 	"github.com/flyingdice/proton-pack/internal/validation"
 	"math/rand"
@@ -19,11 +22,12 @@ var _ validation.Checker = (*Context)(nil)
 type Context struct {
 	Metadata metadata.Metadata `json:"metadata"`
 	Headers  headers.Headers   `json:"headers"`
+	Clock    clock.Clock       `json:"-"`
 }
 
 // NewContext creates and validates a new Context from the given metadata/headers.
 func NewContext(m metadata.Metadata, h headers.Headers) (Context, validation.ErrorGroup) {
-	c := Context{m, h}
+	c := Context{m, h, standard.Clock{}}
 	return c, c.Check()
 }
 
@@ -67,5 +71,6 @@ func Generate(rand *rand.Rand) Context {
 	return Context{
 		Metadata: metadata.Generate(rand),
 		Headers:  headers.Generate(rand),
+		Clock:    frozen.Generate(rand),
 	}
 }
