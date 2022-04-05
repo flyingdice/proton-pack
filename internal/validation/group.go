@@ -79,6 +79,9 @@ func (e *Errors) Error() string {
 	if len(e.errs) == 0 {
 		return ""
 	}
+	if len(e.errs) == 1 {
+		return e.errs[0].Error()
+	}
 
 	var sb strings.Builder
 	for _, e := range e.errs {

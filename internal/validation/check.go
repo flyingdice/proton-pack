@@ -13,13 +13,11 @@ type Check[T any] func(val T) *Error
 // If the value is invalid, one or more Errors will be returned.
 func RunChecks[T any](val T, checks ...Check[T]) ErrorGroup {
 	errs := &Errors{}
-
 	for _, check := range checks {
 		if e := check(val); e != nil {
 			errs.Append(e)
 		}
 	}
-
 	return errs.NilWhenEmpty()
 }
 
