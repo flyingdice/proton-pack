@@ -3,8 +3,15 @@ package state
 import (
 	"fmt"
 	"github.com/flyingdice/proton-pack/internal/validation"
+	"math/rand"
+	"reflect"
 	"sync"
+	"testing/quick"
 )
+
+var _ fmt.Stringer = (*Machine[string])(nil)
+var _ quick.Generator = (*Machine[string])(nil)
+var _ validation.Checker = (*Machine[string])(nil)
 
 type Action func() error
 type Transition func() error
@@ -12,14 +19,20 @@ type Transition func() error
 // Machine represents thread-safe state machine.
 type Machine[T State] struct {
 	state       T
-	transitions map[T]map[T]struct{}
+	states      []T
+	transitions Transitions[T]
 	mu          sync.Mutex
 }
 
 // NewMachine creates and validates a new Machine.
-func NewMachine[T State](initial T, transitions map[T]map[T]struct{}) (*Machine[T], validation.ErrorGroup) {
+func NewMachine[T State](
+	initial T,
+	states []T,
+	transitions Transitions[T],
+) (*Machine[T], validation.ErrorGroup) {
 	m := &Machine[T]{
 		state:       initial,
+		states:      states,
 		transitions: transitions,
 	}
 	return m, m.Check()
@@ -41,7 +54,7 @@ func (m *Machine[T]) To(s T, t Transition) error {
 	if m.In(s) {
 		return &ErrAlreadyInState[T]{s}
 	}
-	if _, ok := m.transitions[m.state][s]; !ok {
+	if !m.transitions.Valid(m.state, s) {
 		return &ErrInvalidTransition[T]{m.state, s}
 	}
 
@@ -62,9 +75,28 @@ func (m *Machine[T]) MustBe(s T, a Action) error {
 	return a()
 }
 
+// Generate random Machine values.
+//
+// Interface: quick.Generator
+func (*Machine[T]) Generate(rand *rand.Rand, size int) reflect.Value {
+	return reflect.ValueOf(Generate[T](rand))
+}
+
 // String value of the Machine.
 //
 // Interface: fmt.Stringer.
 func (m *Machine[T]) String() string {
 	return fmt.Sprintf("Machine[%T](state=%s)", m.state, m.state)
+}
+
+// Generate a random Machine value.
+func Generate[T State](rand *rand.Rand) *Machine[T] {
+	states := GenerateStates[T](rand)
+	transitions := GenerateTransitions[T](rand, states)
+
+	return &Machine[T]{
+		state:       states[rand.Intn(len(states))],
+		states:      states,
+		transitions: transitions,
+	}
 }

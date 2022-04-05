@@ -11,17 +11,35 @@ var ErrTransitionsMustBeSet = validation.NewError(
 	"the machine transitions must be set and cannot be an empty",
 )
 
+// ErrStatesMustBeSet is the validation check error returned when
+// the machine states are empty.
+var ErrStatesMustBeSet = validation.NewError(
+	"machine_states_must_be_set",
+	"the machine states must be set and cannot be an empty",
+)
+
 func defaultChecks[T State]() []validation.Check[*Machine[T]] {
 	return []validation.Check[*Machine[T]]{
-		checkTransitionsValid[T](),
+		checkTransitionsSet[T](),
+		checkStatesSet[T](),
 	}
 }
 
-// checkTransitionsValid validates machine transitions are valid.
-func checkTransitionsValid[T State]() validation.Check[*Machine[T]] {
+// checkTransitionsValid validates machine transitions are set.
+func checkTransitionsSet[T State]() validation.Check[*Machine[T]] {
 	return func(m *Machine[T]) *validation.Error {
-		if len(m.transitions) == 0 {
+		if m.transitions.Len() == 0 {
 			return ErrTransitionsMustBeSet
+		}
+		return nil
+	}
+}
+
+// checkStatesSet validates machine states are set.
+func checkStatesSet[T State]() validation.Check[*Machine[T]] {
+	return func(m *Machine[T]) *validation.Error {
+		if len(m.states) == 0 {
+			return ErrStatesMustBeSet
 		}
 		return nil
 	}
