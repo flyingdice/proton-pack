@@ -5,13 +5,13 @@ import (
 	"math/rand"
 )
 
-// State represents a supported state for a Machine.
+// State represents a generic type constraint for machine states.
 type State interface {
 	~string
 }
 
-// GenerateStates returns a slice of random states.
-func GenerateStates[T State](rand *rand.Rand) []T {
+// Generate returns a slice of random states.
+func Generate[T State](rand *rand.Rand) []T {
 	faker.SetRandomSource(rand)
 
 	var states []T

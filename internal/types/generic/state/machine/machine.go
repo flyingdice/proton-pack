@@ -1,7 +1,9 @@
-package state
+package machine
 
 import (
 	"fmt"
+	"github.com/flyingdice/proton-pack/internal/types/generic/state/state"
+	"github.com/flyingdice/proton-pack/internal/types/generic/state/transition"
 	"github.com/flyingdice/proton-pack/internal/validation"
 	"math/rand"
 	"reflect"
@@ -17,19 +19,23 @@ type Action func() error
 type Transition func() error
 
 // Machine represents thread-safe state machine.
-type Machine[T State] struct {
+type Machine[T state.State] struct {
 	state       T
 	states      []T
-	transitions Transitions[T]
+	transitions *transition.Transitions[T]
 	mu          sync.Mutex
 }
 
 // NewMachine creates and validates a new Machine.
-func NewMachine[T State](
+func NewMachine[T state.State](
 	initial T,
 	states []T,
-	transitions Transitions[T],
+	table transition.Table[T],
 ) (*Machine[T], validation.ErrorGroup) {
+	transitions, err := transition.NewTransitions[T](table)
+	if err != nil {
+		return nil, err
+	}
 	m := &Machine[T]{
 		state:       initial,
 		states:      states,
@@ -90,9 +96,9 @@ func (m *Machine[T]) String() string {
 }
 
 // Generate a random Machine value.
-func Generate[T State](rand *rand.Rand) *Machine[T] {
-	states := GenerateStates[T](rand)
-	transitions := GenerateTransitions[T](rand, states)
+func Generate[T state.State](rand *rand.Rand) *Machine[T] {
+	states := state.Generate[T](rand)
+	transitions := transition.Generate[T](rand, states)
 
 	return &Machine[T]{
 		state:       states[rand.Intn(len(states))],

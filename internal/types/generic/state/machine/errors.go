@@ -1,10 +1,13 @@
-package state
+package machine
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/flyingdice/proton-pack/internal/types/generic/state/state"
+)
 
 // ErrAlreadyInState returned when machine attempts to transition
 // into its current state.
-type ErrAlreadyInState[T State] struct {
+type ErrAlreadyInState[T state.State] struct {
 	state T
 }
 
@@ -14,7 +17,7 @@ func (e *ErrAlreadyInState[T]) Error() string {
 
 // ErrNotInState returned when caller asserts a machine to be in a
 // specific state and it isn't.
-type ErrNotInState[T State] struct {
+type ErrNotInState[T state.State] struct {
 	state T
 }
 
@@ -24,7 +27,7 @@ func (e *ErrNotInState[T]) Error() string {
 
 // ErrInvalidTransition returned when call requests a transition
 // between states that isn't registered.
-type ErrInvalidTransition[T State] struct {
+type ErrInvalidTransition[T state.State] struct {
 	current T
 	next    T
 }

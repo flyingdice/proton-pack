@@ -1,4 +1,4 @@
-package state
+package machine
 
 import (
 	"github.com/matryer/is"
