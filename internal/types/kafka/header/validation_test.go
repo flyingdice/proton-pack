@@ -9,7 +9,7 @@ import (
 // TestValidation_NewHeader checks that default validation checks are run.
 func TestValidation_NewHeader(t *testing.T) {
 	checker := func(key string, val []byte) bool {
-		_, err := NewHeader(key, val)
+		_, err := New(key, val)
 		if key == "" {
 			if !errors.Is(err, ErrKeyMustBeSet) {
 				t.Errorf("expected %v when header is empty string, got %v", ErrKeyMustBeSet, err)
