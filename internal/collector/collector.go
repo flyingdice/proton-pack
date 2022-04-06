@@ -21,8 +21,8 @@ type Collector struct {
 	producer *producer.Producer
 }
 
-// NewCollector creates and validates a new Collector.
-func NewCollector(producer *producer.Producer) (*Collector, validation.ErrorGroup) {
+// New creates and validates a new Collector.
+func New(producer *producer.Producer) (*Collector, validation.ErrorGroup) {
 	m, err := machine.NewMachine[State](Initial, States, Transitions)
 	if err != nil {
 		return nil, err

@@ -15,7 +15,7 @@ func TestValidation_NewCollector(t *testing.T) {
 			t.Error(err.Error())
 			return false
 		}
-		_, err = NewCollector(p)
+		_, err = New(p)
 		if p == nil {
 			if !errors.Is(err, ErrProducerMustBeSet) {
 				t.Errorf("expected %v when producer is nil, got %v", ErrProducerMustBeSet, err)
