@@ -1,6 +1,7 @@
 package context
 
 import (
+	"context"
 	"fmt"
 	"github.com/flyingdice/proton-pack/internal/comparison"
 	"github.com/flyingdice/proton-pack/internal/types/kafka/headers"
@@ -20,14 +21,15 @@ var _ comparison.Equaler = (*Context)(nil)
 var _ validation.Checker = (*Context)(nil)
 
 type Context struct {
+	Context  context.Context   `json:"-"`
 	Metadata metadata.Metadata `json:"metadata"`
 	Headers  headers.Headers   `json:"headers"`
 	Clock    clock.Clock       `json:"-"`
 }
 
 // NewContext creates and validates a new Context from the given metadata/headers.
-func NewContext(m metadata.Metadata, h headers.Headers) (Context, validation.ErrorGroup) {
-	c := Context{m, h, standard.Clock{}}
+func NewContext(ctx context.Context, m metadata.Metadata, h headers.Headers) (Context, validation.ErrorGroup) {
+	c := Context{ctx, m, h, standard.Clock{}}
 	return c, c.Check()
 }
 
@@ -69,6 +71,7 @@ func (c Context) String() string {
 // Generate a random Context value.
 func Generate(rand *rand.Rand) Context {
 	return Context{
+		Context:  context.TODO(),
 		Metadata: metadata.Generate(rand),
 		Headers:  headers.Generate(rand),
 		Clock:    frozen.Generate(rand),
