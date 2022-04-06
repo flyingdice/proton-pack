@@ -34,7 +34,7 @@ func New[T state.State](
 	states []T,
 	table transition.Table[T],
 ) (*Machine[T], validation.ErrorGroup) {
-	transitions, err := transition.NewTransitions[T](table)
+	transitions, err := transition.New[T](table)
 	if err != nil {
 		return nil, err
 	}
