@@ -44,7 +44,7 @@ func TestValidation_NewMachine(t *testing.T) {
 	for _, tc := range tests {
 		assert := is.New(t)
 
-		m, err := NewMachine[string](tc.initial, tc.states, tc.table)
+		m, err := New[string](tc.initial, tc.states, tc.table)
 		if err != nil {
 			if tc.expErr != nil {
 				assert.Equal(err.Error(), tc.expErr.Error())

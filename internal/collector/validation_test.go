@@ -10,7 +10,7 @@ import (
 // TestValidation_NewCollector checks that default validation checks are run.
 func TestValidation_NewCollector(t *testing.T) {
 	checker := func() bool {
-		p, err := producer.NewProducer()
+		p, err := producer.New()
 		if err != nil {
 			t.Error(err.Error())
 			return false
