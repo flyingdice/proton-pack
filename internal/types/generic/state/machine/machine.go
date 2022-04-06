@@ -18,6 +18,8 @@ var _ validation.Checker = (*Machine[string])(nil)
 type Action func() error
 type Transition func() error
 
+var NoOp = func() error { return nil }
+
 // Machine represents thread-safe state machine.
 type Machine[T state.State] struct {
 	state       T
@@ -57,14 +59,15 @@ func (m *Machine[T]) To(s T, t Transition) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
-	if m.In(s) {
-		return &ErrAlreadyInState[T]{s}
-	}
 	if !m.transitions.Valid(m.state, s) {
 		return &ErrInvalidTransition[T]{m.state, s}
 	}
+	if err := t(); err != nil {
+		return err
+	}
 
-	return t()
+	m.state = s
+	return nil
 }
 
 // MustBe invokes the given action if the machine is in the expected state.
@@ -75,7 +78,7 @@ func (m *Machine[T]) MustBe(s T, a Action) error {
 	defer m.mu.Unlock()
 
 	if !m.In(s) {
-		return &ErrAlreadyInState[T]{s}
+		return &ErrNotInState[T]{s}
 	}
 
 	return a()
