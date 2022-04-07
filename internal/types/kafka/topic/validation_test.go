@@ -12,7 +12,7 @@ func TestValidation_NewTopic(t *testing.T) {
 	regex := regexp.MustCompile(`[a-zA-Z0-9_.\-]{1,255}`)
 
 	checker := func(raw string) bool {
-		_, err := NewTopic(raw)
+		_, err := New(raw)
 		if !regex.MatchString(raw) {
 			if !errors.Is(err, ErrMustMatchPattern) {
 				t.Errorf("expected %v when topic doesn't match pattern, got %v", ErrMustMatchPattern, err)

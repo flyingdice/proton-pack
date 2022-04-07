@@ -37,7 +37,7 @@ func (s *Store) Check() validation.ErrorGroup {
 
 // PutParts converts and stores primitive types to topic partition -> offset.
 func (s *Store) PutParts(topic_ string, partition_ int32, offset_ int64) error {
-	t, err := topic.NewTopic(topic_)
+	t, err := topic.New(topic_)
 	if err != nil {
 		return err
 	}

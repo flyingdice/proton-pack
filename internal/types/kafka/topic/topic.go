@@ -18,8 +18,8 @@ var _ validation.Checker = (*Topic)(nil)
 // Topic represents a kafka topic.
 type Topic string
 
-// NewTopic creates and validates a new Topic from the given string.
-func NewTopic(s string) (Topic, validation.ErrorGroup) {
+// New creates and validates a new Topic from the given string.
+func New(s string) (Topic, validation.ErrorGroup) {
 	t := Topic(s)
 	return t, t.Check()
 }
