@@ -1,8 +1,8 @@
 package machine
 
 import (
+	"github.com/flyingdice/proton-pack/internal/testing/assertion"
 	"github.com/flyingdice/proton-pack/internal/types/generic/state/transition"
-	"github.com/matryer/is"
 	"testing"
 )
 
@@ -41,13 +41,13 @@ func TestValidation_NewMachine(t *testing.T) {
 		},
 	}
 
-	for _, tc := range tests {
-		assert := is.New(t)
+	assert := assertion.Fatal(t)
 
+	for _, tc := range tests {
 		m, err := New[string](tc.initial, tc.states, tc.table)
 		if err != nil {
 			if tc.expErr != nil {
-				assert.Equal(err.Error(), tc.expErr.Error())
+				assert.Equal(err, tc.expErr)
 			} else {
 				t.Fatalf("unexpected error %v", err)
 			}

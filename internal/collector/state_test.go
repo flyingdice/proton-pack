@@ -1,7 +1,7 @@
 package collector
 
 import (
-	"github.com/matryer/is"
+	"github.com/flyingdice/proton-pack/internal/testing/assertion"
 	"testing"
 )
 
@@ -10,7 +10,7 @@ import (
 // This exists mainly to bubble up misconfiguration or logic changes and
 // require the developer to explicitly make them known.
 func TestState(t *testing.T) {
-	assert := is.New(t)
+	assert := assertion.Fatal(t)
 
 	// Initial state is Closed.
 	assert.Equal(Initial, Closed)
@@ -21,13 +21,13 @@ func TestState(t *testing.T) {
 
 	// Opened can transition to closed and not itself.
 	opened, ok := Transitions[Opened]
-	assert.True(ok)
-	assert.True(opened[Closed])
-	assert.True(!opened[Opened])
+	assert.Equal(ok, true)
+	assert.Equal(opened[Closed], true)
+	assert.Equal(opened[Opened], false)
 
 	// Closed can transition to opened and not itself.
 	closed, ok := Transitions[Closed]
-	assert.True(ok)
-	assert.True(closed[Opened])
-	assert.True(!closed[Closed])
+	assert.Equal(ok, true)
+	assert.Equal(closed[Opened], true)
+	assert.Equal(closed[Closed], false)
 }

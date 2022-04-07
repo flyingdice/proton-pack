@@ -1,20 +1,20 @@
 package store
 
 import (
-	"github.com/matryer/is"
+	"github.com/flyingdice/proton-pack/internal/testing/assertion"
 	"testing"
 )
 
 // TestValidation_MapNotNil checks that validation inspects the underlying map
 // to make sure its allocated.
 func TestValidation_MapNotNil(t *testing.T) {
-	assert := is.New(t)
+	assert := assertion.Fatal(t)
 
 	_, err := New()
-	assert.NoErr(err)
+	assert.OK(err)
 
 	s := &Store{}
 	errs := s.Check()
 
-	assert.Equal(errs.Error(), ErrStoreMapIsNil.Error())
+	assert.Equal(errs, ErrStoreMapIsNil)
 }
