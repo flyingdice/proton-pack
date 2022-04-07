@@ -3,11 +3,7 @@ package queue
 import (
 	"fmt"
 	"github.com/flyingdice/proton-pack/internal/validation"
-	"github.com/pkg/errors"
 )
-
-var ErrPushUnbuffered = errors.New("push failed; unbuffered channel")
-var ErrEmpty = errors.New("queue is empty")
 
 // Queue represents a FIFO queue.
 type Queue[T any] struct {

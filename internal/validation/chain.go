@@ -1,6 +1,6 @@
 package validation
 
-import "errors"
+import "github.com/pkg/errors"
 
 // chain implements the interfaces necessary for errors.Is/As/Unwrap to
 // work in a deterministic way. Is/As/Error will work on the error stored

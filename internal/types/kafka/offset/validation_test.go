@@ -1,7 +1,7 @@
 package offset
 
 import (
-	"errors"
+	"github.com/pkg/errors"
 	"testing"
 	"testing/quick"
 )

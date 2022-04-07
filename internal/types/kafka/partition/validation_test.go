@@ -1,7 +1,7 @@
 package partition
 
 import (
-	"errors"
+	"github.com/pkg/errors"
 	"testing"
 	"testing/quick"
 )
