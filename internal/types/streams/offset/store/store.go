@@ -24,8 +24,8 @@ type Store struct {
 	store map[topic_partition.TopicPartition]offset.Offset
 }
 
-// NewStore creates and validates a new Store.
-func NewStore() (*Store, validation.ErrorGroup) {
+// New creates and validates a new Store.
+func New() (*Store, validation.ErrorGroup) {
 	s := &Store{make(map[topic_partition.TopicPartition]offset.Offset)}
 	return s, s.Check()
 }
@@ -37,19 +37,19 @@ func (s *Store) Check() validation.ErrorGroup {
 
 // PutParts converts and stores primitive types to topic partition -> offset.
 func (s *Store) PutParts(topic_ string, partition_ int32, offset_ int64) error {
-	t, err := topic.NewTopic(topic_)
+	t, err := topic.New(topic_)
 	if err != nil {
 		return err
 	}
-	p, err := partition.NewPartition(partition_)
+	p, err := partition.New(partition_)
 	if err != nil {
 		return err
 	}
-	o, err := offset.NewOffset(offset_)
+	o, err := offset.New(offset_)
 	if err != nil {
 		return err
 	}
-	tp, err := topic_partition.NewTopicPartition(t, p)
+	tp, err := topic_partition.New(t, p)
 	if err != nil {
 		return err
 	}

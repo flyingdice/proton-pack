@@ -10,7 +10,7 @@ import (
 func TestValidation_MapNotNil(t *testing.T) {
 	assert := is.New(t)
 
-	_, err := NewStore()
+	_, err := New()
 	assert.NoErr(err)
 
 	s := &Store{}

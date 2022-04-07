@@ -28,13 +28,13 @@ type Machine[T state.State] struct {
 	mu          sync.RWMutex
 }
 
-// NewMachine creates and validates a new Machine.
-func NewMachine[T state.State](
+// New creates and validates a new Machine.
+func New[T state.State](
 	initial T,
 	states []T,
 	table transition.Table[T],
 ) (*Machine[T], validation.ErrorGroup) {
-	transitions, err := transition.NewTransitions[T](table)
+	transitions, err := transition.New[T](table)
 	if err != nil {
 		return nil, err
 	}

@@ -22,8 +22,8 @@ type Header struct {
 	Val []byte `json:"val"`
 }
 
-// NewHeader creates and validates a new Header from the given key/val.
-func NewHeader(key string, val []byte) (Header, validation.ErrorGroup) {
+// New creates and validates a new Header from the given key/val.
+func New(key string, val []byte) (Header, validation.ErrorGroup) {
 	h := Header{key, val}
 	return h, h.Check()
 }

@@ -9,7 +9,7 @@ import (
 // TestValidation_NewHeaders checks that default validation checks are run.
 func TestValidation_NewHeaders(t *testing.T) {
 	checker := func(headers []header.Header) bool {
-		_, err := NewHeaders(headers)
+		_, err := New(headers)
 		if err != nil {
 			t.Error(err)
 			return false

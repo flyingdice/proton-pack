@@ -49,7 +49,7 @@ func (t *Topic) UnmarshalJSON(data []byte) (err error) {
 	if err := json.Unmarshal(data, &topic); err != nil {
 		return err
 	}
-	*t, err = NewTopic(topic)
+	*t, err = New(topic)
 	return err
 }
 
@@ -80,6 +80,6 @@ func (t *Topic) UnmarshalBinaryReader(r io.Reader) (err error) {
 	if _, err := io.ReadFull(r, buf); err != nil {
 		return err
 	}
-	*t, err = NewTopic(string(buf))
+	*t, err = New(string(buf))
 	return err
 }

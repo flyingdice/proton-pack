@@ -11,7 +11,7 @@ import (
 // TestValidation_NewRecord checks that default validation checks are run.
 func TestValidation_NewRecord(t *testing.T) {
 	checker := func(m metadata.Metadata, h headers.Headers) bool {
-		_, err := NewRecord(faker.Word(), faker.Sentence(), m, h)
+		_, err := New(faker.Word(), faker.Sentence(), m, h)
 		if err != nil {
 			t.Error(err)
 			return false

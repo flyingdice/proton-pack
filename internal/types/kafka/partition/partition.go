@@ -18,8 +18,8 @@ var _ validation.Checker = (*Partition)(nil)
 // Partition represents the partition of a topic.
 type Partition int32
 
-// NewPartition creates and validates a new Partition from the given int32.
-func NewPartition(v int32) (Partition, validation.ErrorGroup) {
+// New creates and validates a new Partition from the given int32.
+func New(v int32) (Partition, validation.ErrorGroup) {
 	p := Partition(v)
 	return p, p.Check()
 }

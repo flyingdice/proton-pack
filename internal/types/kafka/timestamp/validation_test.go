@@ -10,7 +10,7 @@ import (
 // TestValidation_NewTimestamp checks that default validation checks are run.
 func TestValidation_NewTimestamp(t *testing.T) {
 	checker := func(raw int64) bool {
-		_, err := NewTimestamp(time.UnixMilli(raw))
+		_, err := New(time.UnixMilli(raw))
 		if raw < 0 {
 			if !errors.Is(err, ErrMustBeNewerThanUnixEpoch) {
 				t.Errorf("expected %v when timestamp < 0, got %v", ErrMustBeNewerThanUnixEpoch, err)

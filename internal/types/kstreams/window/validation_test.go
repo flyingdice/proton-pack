@@ -10,7 +10,7 @@ import (
 // TestValidation_NewWindow checks that default validation checks are run.
 func TestValidation_NewWindow(t *testing.T) {
 	checker := func(lo, hi int64) bool {
-		_, err := NewWindow(time.UnixMicro(lo), time.UnixMicro(hi))
+		_, err := New(time.UnixMicro(lo), time.UnixMicro(hi))
 		if lo < 0 {
 			if !errors.Is(err, ErrLoMustBeNewerThanUnixEpoch) {
 				t.Errorf("expected %v when lo < 0, got %v", ErrLoMustBeNewerThanUnixEpoch, err)

@@ -21,13 +21,13 @@ type Collector struct {
 	producer *producer.Producer
 }
 
-// NewCollector creates and validates a new Collector.
-func NewCollector(producer *producer.Producer) (*Collector, validation.ErrorGroup) {
-	m, err := machine.NewMachine[State](Initial, States, Transitions)
+// New creates and validates a new Collector.
+func New(producer *producer.Producer) (*Collector, validation.ErrorGroup) {
+	m, err := machine.New[State](Initial, States, Transitions)
 	if err != nil {
 		return nil, err
 	}
-	o, err := store.NewStore()
+	o, err := store.New()
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (c *Collector) String() string {
 
 // Generate a random collector value.
 func Generate(rand *rand.Rand) *Collector {
-	m, err := machine.NewMachine[State](Initial, States, Transitions)
+	m, err := machine.New[State](Initial, States, Transitions)
 	if err != nil {
 		panic(err)
 	}

@@ -70,6 +70,6 @@ func (h *Headers) UnmarshalBinaryReader(r io.Reader) (err error) {
 		headers = append(headers, hdr)
 	}
 
-	*h, err = NewHeaders(headers)
+	*h, err = New(headers)
 	return err
 }

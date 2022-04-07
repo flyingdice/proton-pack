@@ -15,7 +15,7 @@ type Extractor func(ctx context.Context, rec record.Record) (timestamp.Timestamp
 //
 // If you need "event time" semantics, use Record.
 func WallClock(ctx context.Context, rec record.Record) (timestamp.Timestamp, error) {
-	return timestamp.NewTimestamp(ctx.Clock.Now())
+	return timestamp.New(ctx.Clock.Now())
 }
 
 // Record uses the embedded timestamp of the record for "event time" semantics.

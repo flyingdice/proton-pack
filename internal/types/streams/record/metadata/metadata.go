@@ -25,8 +25,8 @@ type Metadata struct {
 	Topic     topic.Topic         `json:"topic"`
 }
 
-// NewMetadata creates and validates a new Metadata from the given fields.
-func NewMetadata(
+// New creates and validates a new Metadata from the given fields.
+func New(
 	p partition.Partition,
 	o offset.Offset,
 	ts timestamp.Timestamp,

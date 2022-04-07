@@ -95,6 +95,6 @@ func (h *Header) UnmarshalBinaryReader(r io.Reader) (err error) {
 		return errors.Wrap(err, "failed to unmarshal header val")
 	}
 
-	*h, err = NewHeader(string(keyBuf), valBuf)
+	*h, err = New(string(keyBuf), valBuf)
 	return err
 }

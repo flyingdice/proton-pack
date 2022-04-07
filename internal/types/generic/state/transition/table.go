@@ -16,8 +16,8 @@ type Transitions[T state.State] struct {
 	table Table[T]
 }
 
-// NewTransitions creates and validates a new Transitions.
-func NewTransitions[T state.State](transitions Table[T]) (*Transitions[T], validation.ErrorGroup) {
+// New creates and validates a new Transitions.
+func New[T state.State](transitions Table[T]) (*Transitions[T], validation.ErrorGroup) {
 	t := &Transitions[T]{transitions}
 	return t, t.Check()
 }

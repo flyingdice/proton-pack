@@ -11,7 +11,7 @@ import (
 // TestValidation_NewContext checks that default validation checks are run.
 func TestValidation_NewContext(t *testing.T) {
 	checker := func(m metadata.Metadata, h headers.Headers) bool {
-		_, err := NewContext(context.TODO(), m, h)
+		_, err := New(context.TODO(), m, h)
 		if err != nil {
 			t.Error(err)
 			return false

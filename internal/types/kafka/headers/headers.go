@@ -20,8 +20,8 @@ var _ validation.Checker = (*Headers)(nil)
 // Headers represents an ordered slice of header.Header structs.
 type Headers []header.Header
 
-// NewHeaders creates and validates new Headers from the given slice of header.Header.
-func NewHeaders(headers []header.Header) (Headers, validation.ErrorGroup) {
+// New creates and validates new Headers from the given slice of header.Header.
+func New(headers []header.Header) (Headers, validation.ErrorGroup) {
 	h := Headers(headers)
 	return h, h.Check()
 }

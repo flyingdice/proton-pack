@@ -48,7 +48,7 @@ func (o *Offset) UnmarshalJSON(data []byte) (err error) {
 	if err := json.Unmarshal(data, &offset); err != nil {
 		return err
 	}
-	*o, err = NewOffset(offset)
+	*o, err = New(offset)
 	return err
 }
 
@@ -65,6 +65,6 @@ func (o *Offset) UnmarshalBinaryReader(r io.Reader) (err error) {
 	if err := binary.Read(r, binary.LittleEndian, &offset); err != nil {
 		return err
 	}
-	*o, err = NewOffset(offset)
+	*o, err = New(offset)
 	return err
 }
