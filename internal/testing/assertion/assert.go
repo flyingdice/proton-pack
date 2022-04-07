@@ -76,7 +76,7 @@ func (a Assert) Equal(got, want any) bool {
 	a.tb.Helper()
 	if !cmp.Equal(got, want, a.opts) {
 		diff := cmp.Diff(got, want, a.opts)
-		a.log("got: %#v\n\n\twant: %#v\n\n\tdiff: %s", got, want, diff)
+		a.log("\n\tgot: %#v\n\n\twant: %#v\n\n\tdiff: %s", got, want, diff)
 		return false
 	}
 	return true
