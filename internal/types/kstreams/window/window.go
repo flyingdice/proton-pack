@@ -21,8 +21,8 @@ type Window struct {
 	hi time.Time
 }
 
-// NewWindow creates and validates a new Window from the given values.
-func NewWindow(lo, hi time.Time) (Window, validation.ErrorGroup) {
+// New creates and validates a new Window from the given values.
+func New(lo, hi time.Time) (Window, validation.ErrorGroup) {
 	w := Window{lo, hi}
 	return w, w.Check()
 }
