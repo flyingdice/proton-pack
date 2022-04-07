@@ -18,8 +18,8 @@ var _ validation.Checker = (*Offset)(nil)
 // Offset represents the position of a message within a topic+partition.
 type Offset int64
 
-// NewOffset creates and validates a new Offset from the given int64.
-func NewOffset(v int64) (Offset, validation.ErrorGroup) {
+// New creates and validates a new Offset from the given int64.
+func New(v int64) (Offset, validation.ErrorGroup) {
 	o := Offset(v)
 	return o, o.Check()
 }

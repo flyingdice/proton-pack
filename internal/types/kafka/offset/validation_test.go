@@ -9,7 +9,7 @@ import (
 // TestValidation_NewOffset checks that default validation checks are run.
 func TestValidation_NewOffset(t *testing.T) {
 	checker := func(raw int64) bool {
-		_, err := NewOffset(raw)
+		_, err := New(raw)
 		if raw < 0 {
 			if !errors.Is(err, ErrMustBePositive) {
 				t.Errorf("expected %v when offset < 0, got %v", ErrMustBePositive, err)

@@ -45,7 +45,7 @@ func (s *Store) PutParts(topic_ string, partition_ int32, offset_ int64) error {
 	if err != nil {
 		return err
 	}
-	o, err := offset.NewOffset(offset_)
+	o, err := offset.New(offset_)
 	if err != nil {
 		return err
 	}
