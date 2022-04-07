@@ -27,8 +27,8 @@ type Context struct {
 	Clock    clock.Clock       `json:"-"`
 }
 
-// NewContext creates and validates a new Context from the given metadata/headers.
-func NewContext(ctx context.Context, m metadata.Metadata, h headers.Headers) (Context, validation.ErrorGroup) {
+// New creates and validates a new Context from the given metadata/headers.
+func New(ctx context.Context, m metadata.Metadata, h headers.Headers) (Context, validation.ErrorGroup) {
 	c := Context{ctx, m, h, standard.Clock{}}
 	return c, c.Check()
 }
