@@ -11,25 +11,25 @@ import "errors"
 type chain []*Error
 
 // Error implements the error interface
-func (e chain) Error() string {
-	return e[0].Error()
+func (c chain) Error() string {
+	return c[0].Error()
 }
 
 // Unwrap implements errors.Unwrap by returning the next error in the
 // chain or nil if there are no more errors.
-func (e chain) Unwrap() error {
-	if len(e) == 1 {
+func (c chain) Unwrap() error {
+	if len(c) == 1 {
 		return nil
 	}
-	return e[1:]
+	return c[1:]
 }
 
 // As implements errors.As by attempting to map to the current value.
-func (e chain) As(target interface{}) bool {
-	return errors.As(e[0], target)
+func (c chain) As(target interface{}) bool {
+	return errors.As(c[0], target)
 }
 
 // Is implements errors.Is by comparing the current value directly.
-func (e chain) Is(target error) bool {
-	return errors.Is(e[0], target)
+func (c chain) Is(target error) bool {
+	return errors.Is(c[0], target)
 }
