@@ -12,7 +12,7 @@ import (
 // TestValidation_NewMetadata checks that default validation checks are run.
 func TestValidation_NewMetadata(t *testing.T) {
 	checker := func(p partition.Partition, o offset.Offset, ts timestamp.Timestamp, to topic.Topic) bool {
-		_, err := NewMetadata(p, o, ts, to)
+		_, err := New(p, o, ts, to)
 		if err != nil {
 			t.Error(err)
 			return false
