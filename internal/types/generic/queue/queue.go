@@ -10,8 +10,8 @@ type Queue[T any] struct {
 	ch chan T
 }
 
-// NewQueue creates and validates a new Queue.
-func NewQueue[T any](cap int) (*Queue[T], validation.ErrorGroup) {
+// New creates and validates a new Queue.
+func New[T any](cap int) (*Queue[T], validation.ErrorGroup) {
 	q := &Queue[T]{
 		ch: make(chan T, cap),
 	}

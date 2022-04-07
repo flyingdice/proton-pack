@@ -19,7 +19,7 @@ func TestValidation_NewQueue(t *testing.T) {
 	for _, tc := range tests {
 		assert := is.New(t)
 
-		m, err := NewQueue[string](tc.capacity)
+		m, err := New[string](tc.capacity)
 		if err != nil {
 			if m.ch == nil {
 				if !errors.Is(err, ErrChannelMustBeSet) {
