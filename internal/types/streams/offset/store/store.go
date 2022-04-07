@@ -24,8 +24,8 @@ type Store struct {
 	store map[topic_partition.TopicPartition]offset.Offset
 }
 
-// NewStore creates and validates a new Store.
-func NewStore() (*Store, validation.ErrorGroup) {
+// New creates and validates a new Store.
+func New() (*Store, validation.ErrorGroup) {
 	s := &Store{make(map[topic_partition.TopicPartition]offset.Offset)}
 	return s, s.Check()
 }

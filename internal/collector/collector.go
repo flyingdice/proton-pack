@@ -27,7 +27,7 @@ func New(producer *producer.Producer) (*Collector, validation.ErrorGroup) {
 	if err != nil {
 		return nil, err
 	}
-	o, err := store.NewStore()
+	o, err := store.New()
 	if err != nil {
 		return nil, err
 	}
