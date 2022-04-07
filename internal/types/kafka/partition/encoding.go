@@ -48,7 +48,7 @@ func (p *Partition) UnmarshalJSON(data []byte) (err error) {
 	if err := json.Unmarshal(data, &partition); err != nil {
 		return err
 	}
-	*p, err = NewPartition(partition)
+	*p, err = New(partition)
 	return err
 }
 
@@ -65,6 +65,6 @@ func (p *Partition) UnmarshalBinaryReader(r io.Reader) (err error) {
 	if err := binary.Read(r, binary.LittleEndian, &partition); err != nil {
 		return err
 	}
-	*p, err = NewPartition(partition)
+	*p, err = New(partition)
 	return err
 }
