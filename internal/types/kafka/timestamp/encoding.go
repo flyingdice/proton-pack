@@ -49,7 +49,7 @@ func (t *Timestamp) UnmarshalJSON(data []byte) (err error) {
 	if err := json.Unmarshal(data, &timestamp); err != nil {
 		return err
 	}
-	*t, err = NewTimestamp(timestamp)
+	*t, err = New(timestamp)
 	return err
 }
 
@@ -66,6 +66,6 @@ func (t *Timestamp) UnmarshalBinaryReader(r io.Reader) (err error) {
 	if err := binary.Read(r, binary.LittleEndian, &timestampMilli); err != nil {
 		return err
 	}
-	*t, err = NewTimestamp(time.UnixMilli(timestampMilli))
+	*t, err = New(time.UnixMilli(timestampMilli))
 	return err
 }

@@ -21,8 +21,8 @@ type Timestamp struct {
 	time.Time
 }
 
-// NewTimestamp creates and validates a new Timestamp from the given time.Time.
-func NewTimestamp(t time.Time) (Timestamp, validation.ErrorGroup) {
+// New creates and validates a new Timestamp from the given time.Time.
+func New(t time.Time) (Timestamp, validation.ErrorGroup) {
 	ts := Timestamp{t}
 	return ts, ts.Check()
 }
