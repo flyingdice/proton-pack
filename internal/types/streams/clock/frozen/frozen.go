@@ -14,7 +14,7 @@ var _ fmt.Stringer = (*Clock)(nil)
 var _ quick.Generator = (*Clock)(nil)
 var _ clock.Clock = (*Clock)(nil)
 
-// Clock implementation that is frozen in time. Useful for tests.
+// Clock implementation that is frozen in time. Useful for testing.
 type Clock struct {
 	now time.Time
 }

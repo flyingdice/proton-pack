@@ -12,7 +12,7 @@ import (
 func Test_Validate(t *testing.T) {
 	var errTestIntPositive = NewError("int_must_be_positive", "integer value must be positive")
 
-	// Simple check function that tests integers are positive.
+	// Simple check function that testing integers are positive.
 	checkPositive := func() Check[int] {
 		return func(x int) *Error {
 			if x%2 != 0 {

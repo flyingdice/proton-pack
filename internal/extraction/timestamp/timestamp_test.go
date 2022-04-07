@@ -1,9 +1,9 @@
 package timestamp
 
 import (
+	"github.com/flyingdice/proton-pack/internal/testing/assertion"
 	"github.com/flyingdice/proton-pack/internal/types/streams/record/context"
 	"github.com/flyingdice/proton-pack/internal/types/streams/record/record"
-	"github.com/matryer/is"
 	"github.com/pkg/errors"
 	"reflect"
 	"testing"
@@ -53,7 +53,7 @@ func TestFactory(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		assert := is.New(t)
+		assert := assertion.Fatal(t)
 
 		got, err := Factory(tc.name)
 		if err != nil {
@@ -61,9 +61,7 @@ func TestFactory(t *testing.T) {
 		} else {
 			x := reflect.ValueOf(tc.exp).Pointer()
 			y := reflect.ValueOf(got).Pointer()
-			if x != y {
-				t.Fatalf("expected extractor: %v, got: %v", x, y)
-			}
+			assert.Equal(x, y)
 		}
 	}
 }

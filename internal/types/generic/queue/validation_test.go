@@ -1,8 +1,7 @@
 package queue
 
 import (
-	"github.com/matryer/is"
-	"github.com/pkg/errors"
+	"github.com/flyingdice/proton-pack/internal/testing/assertion"
 	"testing"
 )
 
@@ -17,14 +16,12 @@ func TestValidation_NewQueue(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		assert := is.New(t)
+		assert := assertion.Fatal(t)
 
 		m, err := New[string](tc.capacity)
 		if err != nil {
 			if m.ch == nil {
-				if !errors.Is(err, ErrChannelMustBeSet) {
-					t.Fatalf("expected %v when channel is nil, got %v", ErrChannelMustBeSet, err)
-				}
+				assert.Equal(err, ErrChannelMustBeSet)
 			}
 		} else {
 			assert.Equal(m.Cap(), tc.capacity)
