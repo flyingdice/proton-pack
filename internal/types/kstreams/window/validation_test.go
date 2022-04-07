@@ -1,7 +1,7 @@
 package window
 
 import (
-	"errors"
+	"github.com/pkg/errors"
 	"testing"
 	"testing/quick"
 	"time"

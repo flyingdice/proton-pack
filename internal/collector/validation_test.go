@@ -1,8 +1,8 @@
 package collector
 
 import (
-	"errors"
 	"github.com/flyingdice/proton-pack/external/kafka/producer"
+	"github.com/pkg/errors"
 	"testing"
 	"testing/quick"
 )

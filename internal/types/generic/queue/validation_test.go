@@ -1,8 +1,8 @@
 package queue
 
 import (
-	"errors"
 	"github.com/matryer/is"
+	"github.com/pkg/errors"
 	"testing"
 )
 

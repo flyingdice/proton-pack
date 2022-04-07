@@ -1,7 +1,7 @@
 package topic
 
 import (
-	"errors"
+	"github.com/pkg/errors"
 	"regexp"
 	"testing"
 	"testing/quick"

@@ -1,9 +1,9 @@
 package validation
 
 import (
-	"errors"
 	"fmt"
 	"github.com/bxcodec/faker/v3"
+	"github.com/pkg/errors"
 	"testing"
 	"testing/quick"
 )
