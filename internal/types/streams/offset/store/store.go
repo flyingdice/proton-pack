@@ -49,7 +49,7 @@ func (s *Store) PutParts(topic_ string, partition_ int32, offset_ int64) error {
 	if err != nil {
 		return err
 	}
-	tp, err := topic_partition.NewTopicPartition(t, p)
+	tp, err := topic_partition.New(t, p)
 	if err != nil {
 		return err
 	}

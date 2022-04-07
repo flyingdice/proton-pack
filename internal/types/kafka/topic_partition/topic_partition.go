@@ -22,8 +22,8 @@ type TopicPartition struct {
 	Partition partition.Partition `json:"partition"`
 }
 
-// NewTopicPartition creates and validates a new TopicPartition from the given Topic/Partition.
-func NewTopicPartition(t topic.Topic, p partition.Partition) (TopicPartition, validation.ErrorGroup) {
+// New creates and validates a new TopicPartition from the given Topic/Partition.
+func New(t topic.Topic, p partition.Partition) (TopicPartition, validation.ErrorGroup) {
 	tp := TopicPartition{t, p}
 	return tp, tp.Check()
 }

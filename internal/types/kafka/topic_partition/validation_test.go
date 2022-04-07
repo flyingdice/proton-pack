@@ -10,7 +10,7 @@ import (
 // TestValidation_NewTopicPartition checks that default validation checks are run.
 func TestValidation_NewTopicPartition(t *testing.T) {
 	checker := func(to topic.Topic, p partition.Partition) bool {
-		_, err := NewTopicPartition(to, p)
+		_, err := New(to, p)
 		if err != nil {
 			t.Error(err)
 			return false
