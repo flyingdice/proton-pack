@@ -25,8 +25,8 @@ type Record struct {
 	Val      val.Val           `json:"val"`
 }
 
-// NewRecord creates and validates new Record from the given values.
-func NewRecord(
+// New creates and validates new Record from the given values.
+func New(
 	k key.Key,
 	v val.Val,
 	m metadata.Metadata,
